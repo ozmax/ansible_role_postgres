@@ -1,0 +1,2 @@
+---
+pg_hba_path: "/etc/postgresql/11/main/pg_hba.conf"

@@ -1,0 +1,30 @@
+---
+- name: Postgres is installed.
+  apt:
+    name: postgresql
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Postgres auth method is configured.
+  postgresql_pg_hba:
+    dest: "{{ pg_hba_path }}"
+    contype: local
+    databases: sameuser
+    users: all
+    method: peer
+  notify: "reload_postgres"
+
+- name: Project database exists.
+  become_user: postgres
+  postgresql_db:
+    name: "{{ database_name }}"
+    template: template0
+    encoding: UTF8
+    lc_collate: en_US.UTF-8
+    lc_ctype: en_US.UTF-8
+
+- name: Postgres user for project exists.
+  become_user: postgres
+  postgresql_user:
+    name: "{{ unix_user }}"
