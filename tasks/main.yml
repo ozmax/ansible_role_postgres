@@ -1,4 +1,12 @@
 ---
+
+- name: python3-psycopg2 required by ansible postgres plugin is installed.
+  apt:
+    name: python3-psycopg2
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
 - name: Postgres is installed.
   apt:
     name: postgresql
